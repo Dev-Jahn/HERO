@@ -19,10 +19,11 @@ else
 fi
 
 docker run --gpus '"'device=$CUDA_VISIBLE_DEVICES'"' --ipc=host --network=host --rm -it \
+	--shm-size=1g \
     --mount src=$(pwd),dst=/src,type=bind \
     --mount src=$OUTPUT,dst=/storage,type=bind \
     --mount src=$PRETRAIN_DIR,dst=/pretrain,type=bind,readonly \
     --mount src=$TXT_DB,dst=/txt,type=bind$RO \
     --mount src=$VID_DIR,dst=/video,type=bind,readonly \
     -e NVIDIA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES \
-    -w /src linjieli222/hero
+    -w /src hero-custom

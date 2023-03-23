@@ -1,13 +1,14 @@
-FROM nvcr.io/nvidia/pytorch:19.10-py3
+FROM nvcr.io/nvidia/pytorch:23.01-py3
+ARG DEBIAN_FRONTEND=noninteractive
 
 # basic python packages
-RUN pip install transformers==2.0.0 \
-                tensorboardX==1.7 ipdb==0.12 lz4==2.1.9 lmdb==0.97
+RUN pip install transformers \
+                tensorboardX ipdb lz4 lmdb
 
 ####### horovod for multi-GPU (distributed) training #######
 # horovod
 RUN HOROVOD_GPU_ALLREDUCE=NCCL HOROVOD_NCCL_LINK=SHARED HOROVOD_WITH_PYTORCH=1 \
-    pip install --no-cache-dir horovod==0.18.2 &&\
+    pip install --no-cache-dir horovod &&\
     ldconfig
 
 # ssh
